@@ -26,7 +26,7 @@ void loop()
     MFS.Display (-56);
     delay (2000);
     
-    digitalWrite(LED_1_PIN, HIGH);    
+    digitalWrite(LED_1_PIN, LOW);    
     while (digitalRead(BUTTON_1_PIN));     // wait until S1 (low active)
     
     for (i = 0; i < 10; i++)    
@@ -36,6 +36,6 @@ void loop()
       digitalWrite(BUZZER_PIN, HIGH);
       delay (10);
     }
-    digitalWrite(LED_1_PIN, LOW);    
+    digitalWrite(LED_1_PIN, HIGH);    
   }  
 }
