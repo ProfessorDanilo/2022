@@ -1,205 +1,87 @@
-/*
- * UTILIZEI PARTE DO CÓDIGO COM COMENTÁRIOS MANTIDOS
-  LiquidCrystal Library - Hello World
-
- Demonstrates the use a 16x2 LCD display.  The LiquidCrystal
- library works with all LCD displays that are compatible with the
- Hitachi HD44780 driver. There are many of them out there, and you
- can usually tell them by the 16-pin interface.
-
- This sketch prints "Hello World!" to the LCD
- and shows the time.
-
-  The circuit:
- * LCD RS pin to digital pin 12
- * LCD Enable pin to digital pin 11
- * LCD D4 pin to digital pin 5
- * LCD D5 pin to digital pin 4
- * LCD D6 pin to digital pin 3
- * LCD D7 pin to digital pin 2
- * LCD R/W pin to ground
- * LCD VSS pin to ground
- * LCD VCC pin to 5V
- * 10K resistor:
- * ends to +5V and ground
- * wiper to LCD VO pin (pin 3)
-
- Library originally added 18 Apr 2008
- by David A. Mellis
- library modified 5 Jul 2009
- by Limor Fried (http://www.ladyada.net)
- example added 9 Jul 2009
- by Tom Igoe
- modified 22 Nov 2010
- by Tom Igoe
- modified 7 Nov 2016
- by Arturo Guadalupi
-
- This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/LiquidCrystalHelloWorld
-
-
-*ADICIONEI SENSOR DHT
-*PORTA A0
-*/
-
-// include the library code:
-#include <LiquidCrystal.h>
-#include "DHT.h"
-//#include "MQ7.h"
-//#define A_PIN 1   //tentei usar a biblioteca mas desisti
-//#define VOLTAGE 5
-// init MQ7 device
-//MQ7 mq7(A_PIN, VOLTAGE);
-/*entã resolvi considerar 0v como o mínimo (20ppm) segundo
- * datasheet
- * enquanto que o máximo 5V ou entrada analógica de 1023
- * como 2000 ppm que é o máximo que o MQ7 lê
- * https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-7.pdf
+/*******************************************************************************
+*
+*    Projeto: Hello Word! - COMUNICAÇÃO I2C
+*    Data: 30/09/2020
+*            http://squids.com.br/arduino
+*
+*******************************************************************************/
+/*adaptado por danilo lima
+ * retirado de http://www.squids.com.br/arduino/index.php/projetos-arduino/projetos-squids/basico/297-projeto-90-como-controlar-um-display-oled-ssd1306-no-arduino
+ * adicionei sensor ultrasonico
  */
-// Ligações do Arduino
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
-DHT dht(A0, DHT11); //Definindo porta e modelo do sensor
+float eco=0, x1=0, x2=0, t1=0, t2=0, v1=0, v2=0, a;
 
 
+const byte SCREEN_WIDTH = 128; // OLED display width, in pixels
+const byte SCREEN_HEIGHT = 64; // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+const int OLED_RESET = -1; // Reset pin # (or -1 if sharing Arduino reset pin)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 void setup() {
+//inicializano comunicação serial e configurando ultrasom hc-sr04
+Serial.begin(9600);
+pinMode(2,INPUT);//sinal echo do módulo ultrasonico (sonar)
+pinMode(3,OUTPUT);//triger do sonar
+// initialize with the I2C addr 0x3C
+display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  
 
-  pinMode(A0, INPUT);//MQ7
-  pinMode(8, OUTPUT);//para soar o alarme
+// Clear the buffer.
+display.clearDisplay();
   
-  lcd.begin(16, 2); // Aqui informo que são 16 caracteres e 2 linhas
-  lcd.setCursor(0, 0); // To colocando para exibir a frase na coluna 0 e linha 0 (opcional)
-  lcd.print("Bem vindo ao lab"); // Escrevo "Arduino"
-  lcd.setCursor(0, 1); // E agora to colocando para exibir a frase na coluna 0 e linha 1
-  lcd.print("de fisica"); // E escrevo "Display LCD"
-
- 
-  //iniciando serial para testar comunicação
-  Serial.begin(9600);
-  Serial.println("DHTxx test!");
-  dht.begin();
-/*//exclua este comentário para usar a biblioteca do MQ7 
-  Serial.println("");   // blank new line
-
-  Serial.println("Calibrating MQ7");
-  mq7.calibrate();    // calculates R0
-  Serial.println("Calibration done!");
-  */
-  
-  delay(3000);
+// Display Text "Hello Word"
+display.clearDisplay();
+display.setTextSize(2);
+display.setTextColor(WHITE);
+display.setCursor(0,10);
+display.println("Ola!");
+display.setTextSize(1);
+display.println("Seja bem vindo(a) ao");
+display.println("laboratorio de");
+display.println("ciencia e tecnologia.");
+display.display();
+delay(5000);
+display.clearDisplay();
+display.setTextSize(1);
+display.setTextColor(WHITE);
+display.setCursor(0,10);
+display.println("Vamos comecar usando um");
+display.print("  ");
+display.setTextSize(2);
+display.println("SONAR!!!");
+display.display();
+delay(5000);
 }
-
 
 void loop() {
-  
-
-  // A leitura da temperatura e umidade pode levar 250ms!
-  // O atraso do sensor pode chegar a 2 segundos.
-  float h = dht.readHumidity();
-  float t = dht.readTemperature();
-  // testa se retorno é valido, caso contrário algo está errado.
-  if (isnan(t) || isnan(h)) 
-  {
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print("Failed to read");
-    lcd.setCursor(0,1);
-    lcd.print("from DHT!");
-  } 
-  else
-  {/*
-    Serial.print("PPM = "); Serial.println(mq7.readPpm());
-
-    Serial.println("");   // blank new line
-  */
-    //exibindo no lcd
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print("Umidade:");
-    lcd.setCursor(0,1);
-    lcd.print(h);
-    lcd.setCursor(6,1);
-    lcd.print("por cento");
-    delay(3000);
-    //printando no serial monitor
-    Serial.print("Umidade: ");
-    Serial.print(h);
-    Serial.print(" %t");
-    //exibindo no lcd
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print("Temperatura:");
-    lcd.setCursor(0,1);
-    lcd.print(t);
-    lcd.setCursor(6,1);
-    lcd.print("*C");
-    delay(3000);
-    //printando no serial monitor
-    Serial.print("Temperatura: ");
-    Serial.print(t);
-    Serial.println(" *C");}
-    //exibindo no lcd
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print("Concent. de CO:");
-    lcd.setCursor(0,1);
-    int conc=map(analogRead(A1),0,1023,20,2000);
-    lcd.print(conc);//concentração em ppm de CO
-    lcd.setCursor(7,1);
-    lcd.print("ppm");
-    delay(3000);
-    if(conc<450){
-        lcd.clear();
-        lcd.setCursor(0,0);
-        lcd.print("Concentracao");
-        lcd.setCursor(0,1);
-        lcd.print("normal");
-        delay(3000);      
-    }
-    if(conc>=450&conc<700){
-        lcd.clear();
-        lcd.setCursor(0,0);
-        lcd.print("Concent. alta");
-        lcd.setCursor(0,1);
-        lcd.print("mas aceitavel");
-        delay(3000);     
-    }
-    if(conc>=700&conc<1000){
-        lcd.clear();
-        lcd.setCursor(0,0);
-        lcd.print("Concent. alta");
-        lcd.setCursor(0,1);
-        lcd.print("MAXIMO TOLERAVEL");
-        delay(3000);     
-    }
-    if(conc>=1000){
-        while(conc>=1000){
-          lcd.clear();
-          lcd.setCursor(0,0);
-          lcd.print("Concent. MUITO");
-          lcd.setCursor(0,1);
-          lcd.print("ALTA EVACUE AREA");
-          int conc=map(analogRead(A1),0,1023,20,2000);
-          tone(8, 440, 500);
-          tone(8, 494, 500);
-          tone(8, 523, 500);
-          tone(8, 577, 500);
-          tone(8, 620, 500);
-          lcd.clear();
-          lcd.setCursor(0,0);
-          lcd.print("    ATENCAO!!! ");
-          delay(500);
-          if(conc<900){break;}
-        }
-        }
-        delay(3000);     
-    
-    
-      
-
-    
-}
+  digitalWrite(3,HIGH);
+  delay(10);
+  digitalWrite(3,LOW);
+  eco=pulseIn(2,HIGH);
+  t1=t2;
+  t2=millis();
+  x1=x2;
+  x2=15.6*eco/897;
+  v1=v2;
+  v2=1000*(x2-x1)/(t2-t1);
+  a=1000*(v2-v1)/(t2-t1);
+  Serial.println(x1);
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0,10);
+  display.print(x2);
+  display.println(" cm");
+  display.print(abs(v2));
+  display.println(" cm/s");   
+  display.print(abs(a));
+  display.println(" cm/s2"); 
+  display.display();
+  delay(1000);
+  }
