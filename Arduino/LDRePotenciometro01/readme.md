@@ -1,4 +1,6 @@
-**circuito**
+**circuito**  
+  
+  
                           ___ A5 
                          |
     GND --- ^v^v10K^v^v ----- 5V  
