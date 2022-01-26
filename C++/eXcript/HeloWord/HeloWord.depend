@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1587409221 source:c:\users\danilolima\google drive\programacao\c++\excript\heloword\main.cpp
+	<iostream>
+	<stdlib.h>
+
+1587409299 source:c:\users\danilolima\google drive\programacao\c++\excript\heloword\variaveis.cpp
+	<iostream>
+	<stdlib.h>
+
