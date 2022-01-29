@@ -7,7 +7,7 @@
 a=0.0
 b=1.0
 #defina a precisão da respostas
-e=0.00001
+e=0.001
 print("f(x)=x^3-9x+3          I[{:,.3f}, {:,.3f}]          e={:,.10f}\n".format(a,b,e))
 #definindo a função
 def f(x):
