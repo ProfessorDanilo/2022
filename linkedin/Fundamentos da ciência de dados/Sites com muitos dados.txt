@@ -1,0 +1,16 @@
+https://ergast.com/mrd/   ---> dados sobre fórmula 1
+https://cran.r-project.org/      e     https://www.crantastic.org/    ---> pacotes para R
+Anaconda e canopy possuem Jupter integrado   ---> O jupter serve para mais de 50 linguagens, inclusive R
+canais importantes sobre datascience (blogs):
+https://www.r-bloggers.com/
+https://datatau.net/
+https://www.ok.org.br/
+https://planet.scipy.org/
+https://www.oreilly.com/radar/
+
+
+No quesito social
+https://www.datakind.org/
+http://www.datalook.com.br/
+https://datapopalliance.org/
+https://www.meetup.com/pt-BR/Data-for-Good-Calgary/
