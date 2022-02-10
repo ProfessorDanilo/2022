@@ -1,0 +1,12 @@
+<header>
+	formata o cabeçalho
+<section>
+	corpo proncipal. Como exemplo, seria o conteúdo ao lado do aside
+<aside>
+	conteúdo em geral lateral
+<nav>
+	classe usada geralmente na navegação
+<footer>
+	roda pé
+<article>
+	artigo

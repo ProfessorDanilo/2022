@@ -1,0 +1,11 @@
+from vpython import *
+sol=sphere(texture=textures.sun, pos=vec(-12,0,0))
+mercurio=sphere(texture=textures.mercury, pos=vec(-9,0,0))
+venus=sphere(texture=textures.venus, pos=vec(-6,0,0))
+terra=sphere(texture=textures.earth,pos=vec(-3,0,0))
+lua=sphere(texture=textures.moon, pos=vec(0,0,0))
+marte=sphere(texture=textures.mars, pos=vec(3,0,0))
+jupter=sphere(texture=textures.jupiter, pos=vec(6,0,0))
+saturno=sphere(texture=textures.saturn, pos=vec(9,0,0))
+urano=sphere(texture=textures.uranus, pos=vec(12,0,0))
+netuno=sphere(texture=textures.neptune, pos=vec(15,0,0))

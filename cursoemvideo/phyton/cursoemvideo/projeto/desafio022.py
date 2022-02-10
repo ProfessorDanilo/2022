@@ -1,0 +1,5 @@
+nome=input('Digite seu nome, por gentileza: ')
+print('Seu nome em maíscula é:\n',nome.upper())
+print('Seu nome em minúscula é:\n',nome.lower())
+print('O tamanho do seu nome, sem considerar espaços, é: ',len(''.join(nome.split())))
+print('O tamanho do seu primeiro nome é: ',len(nome.split()[0]))

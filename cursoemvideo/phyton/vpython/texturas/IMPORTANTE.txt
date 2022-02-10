@@ -1,0 +1,6 @@
+a pasta C:\Users\DaniloLima\AppData\Local\Programs\Python\Python37-32\Lib\site-packages\vpython contém as texturas que coloquei em 2019
+
+o arquivo C:\Users\DaniloLima\AppData\Local\Programs\Python\Python37-32\Lib\site-packages\vpython\vpython.py foi modificato para se usar a textura
+
+
+o arquivo teste_texturas.py é apenas um arquivo de testes com todas as texturas e como chama-las
