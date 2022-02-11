@@ -1,0 +1,11 @@
+para trabalhaar com strings
+"ana gosta de banana".count("n")  --> retorna a insidência do "n" na string
+texto.find("m")  --> retorna o endereço da primeira cocorrência da string "m". -1 significa que não encontrou
+len(texto)  --> retorna o comprimento da string texto
+fruta=["amora"]; fruta[inicio:fim]  --> retorna uma string que começa em inicio e terminar em fim
+"teste".capitalize()  --> deixa o primeiro caracter em maiúsculo
+strip()  --> remove os espaços antes e depois na string
+replace(texto, texto a ser substituído)
+"teste".center(tamanho da string)  --> define o tamanho da string e  centraliza o texto. Exemplo: "     teste     " se usarmos "teste".center(15)
+.upper()  --> tudo em MAIÚSCULA
+.lower()  --> tudo em minúscula
