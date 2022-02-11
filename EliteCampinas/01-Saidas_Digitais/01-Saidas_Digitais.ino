@@ -1,6 +1,11 @@
 /* Este é o primeiro programa feito no Arduino na disciplina de ciências.
  * Professor: Danilo Lima
- * Conteúdo no link: 
+ * Código no GitHub: 
+ * https://github.com/ProfessorDanilo/2022/blob/main/EliteCampinas/01-Saidas_Digitais/01-Saidas_Digitais.ino
+ * 
+ * Circuito no Thinkercad:
+ * https://www.tinkercad.com/embed/9ie8tQgsveu
+ * 
  * website em 2022: fisica.professordanilo.com/lab.html
  * ou fisica.professordanilo.com e clique em Laboratório
  * Aula 4
