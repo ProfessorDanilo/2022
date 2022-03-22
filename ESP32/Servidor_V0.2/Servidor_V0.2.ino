@@ -1,70 +1,103 @@
-#include <WiFi.h>                                                                 //Inclusão das bibliotecas
-#include <WebServer.h>
-#include <Wire.h>
-#define BMP_SDA 21                                                                //Definição dos pinos I2C
-#define BMP_SCL 22
- 
-WebServer sv(80);
-  
-const char* ssid= "Danilo_e_Udelis_2G";                                             //Dados da sua rede Wi-Fi                                                
-const char* senha = "982508999";
-void conectado() {                                                                //Sub-rotina para caso o servidor fique online
-  sv.send(200, "text/html", html(analogRead(34), analogRead(35)));     //Envia ao servidor, em formato HTML, o nosso script, com os parâmetros de pressão e temperatura
-}
-void nao_encontrado() {                                                           //Sub-rotina para caso seja retornado um erro
-  sv.send(404, "text/plain", "Não encontrado");                                   //Retorna a mensagem de erro em caso de um retorno 404
-}
-String html(float temperatura, float pressao) {                                   //Variável que armazenará o script HTML
-  String cd = "<!DOCTYPE html>\n";
-  cd += "<html lang=\"pt-br\">\n";
-  cd += "<head>\n";
-  cd += "<meta charset=\"UTF-8\">\n";
-  cd += "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n";
-  cd += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
-  cd += "<title>Dados dos sensores</title>\n";
-  cd += "<style>\n";
-  cd += "html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
-  cd += "body{margin-top: 50px;} \n";
-  cd += "h1 {color: #444444; margin: 50px auto 30px;}\n";
-  cd += "p {font-size: 24px; color: #444444; margin-bottom: 10px;}\n";
-  cd += "</style>\n";
-  cd += "<meta http-equiv=\"refresh\" content=\"1\">\n";
-  cd += "</head>\n";
-  cd += "<body>\n";
-  cd += "<div id=\"webpage\">\n";
-  cd += "<h1>Dados dos sensores</h1>\n";
-  cd += "<p>Temperatura: ";
-  cd += (int)temperatura;
-  cd += " *C</p>\n";
-  cd += "<p>Umidade: 65%</p>\n";
-  cd += "<p>Pressão Atmosférica: ";
-  cd += (int)pressao / 101325;
-  cd += " atm</p>\n";
-  cd += "</div>\n";
-  cd += "</body>\n";  
-  cd += "</html>\n";
-  return cd;                                                                      //Retorna o script                                             
-} 
+#include <ESP8266WiFi.h>
+
+#ifndef STASSID
+#define STASSID "Danilo_e_Udelis_2G"
+#define STAPSK  "982508999"
+#endif
+
+const char* ssid = STASSID;
+const char* password = STAPSK;
+
+// Create an instance of the server
+// specify the port to listen on as an argument
+WiFiServer server(82);
+
 void setup() {
-  Serial.begin(115200);                                                           //Inicia o monitor serial
-  delay(100);
+  Serial.begin(115200);
+
+  Serial.flush();
+  delay(1000);
   
-  Serial.print("Se conectando a: ");
+  // prepare LED
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, 0);
+
+  // Connect to WiFi network
+  Serial.println();
+  Serial.println("Aguarde");
+  Serial.print(F("Connecting to "));
   Serial.println(ssid);
-  WiFi.begin(ssid, senha);                                                        //Se conecta ao Wi-Fi
-  while (WiFi.status() != WL_CONNECTED) {                                         //Verifica se a conexão foi bem-sucedida
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
-    Serial.print(".");
+    Serial.print(F(".\n\t"));
   }
-  Serial.println("\nConectado");
-  Serial.print("IP: ");
-  Serial.println(WiFi.localIP());                                                 //Imprime o endereço de IP
-  sv.on("/", conectado);
-  sv.onNotFound(nao_encontrado);
-  sv.begin();                                                                     //Inicia o servidor
-  Serial.println("Servidor Online");
+  Serial.println();
+  Serial.println(F("WiFi connected"));
+
+  // Start the server
+  server.begin();
+  Serial.println(F("Server started"));
+
+  // Print the IP address
+  Serial.println(WiFi.localIP());
 }
-void loop() { 
-  sv.handleClient();                                                           //Executa as ações do servidor
-  Serial.println(analogRead(34));
+
+
+
+
+void loop() {
+  // Check if a client has connected
+  WiFiClient client = server.available();
+  if (!client) {
+    return;
+  }
+  Serial.println(F("new client"));
+
+  client.setTimeout(5000); // default is 1000
+
+  // Read the first line of the request
+  String req = client.readStringUntil('\r');
+  Serial.println(F("request: "));
+  Serial.println(req);
+
+  // Match the request
+  int val;
+  if (req.indexOf(F("/gpio/0")) != -1) {
+    val = 0;
+  } else if (req.indexOf(F("/gpio/1")) != -1) {
+    val = 1;
+  } else {
+    Serial.println(F("invalid request"));
+    val = digitalRead(LED_BUILTIN);
+  }
+
+  // Set LED according to the request
+  digitalWrite(LED_BUILTIN, val);
+
+  // read/ignore the rest of the request
+  // do not client.flush(): it is for output only, see below
+  while (client.available()) {
+    // byte by byte is not very efficient
+    client.read();
+  }
+
+  // Send the response to the client
+  // it is OK for multiple small client.print/write,
+  // because nagle algorithm will group them into one single packet
+  client.print(F("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\nGPIO is now "));
+  client.print((val) ? F("high") : F("low"));
+  client.print(F("<br><br>Click <a href='http://"));
+  client.print(WiFi.localIP());
+  client.print(F(":82/gpio/1'>here</a> to switch LED GPIO on, or <a href='http://"));
+  client.print(WiFi.localIP());
+  client.print(F(":82/gpio/0'>here</a> to switch LED GPIO off.</html>"));
+
+  // The client will actually be *flushed* then disconnected
+  // when the function returns and 'client' object is destroyed (out-of-scope)
+  // flush = ensure written data are received by the other side
+  Serial.println(F("Disconnecting from client"));
 }
