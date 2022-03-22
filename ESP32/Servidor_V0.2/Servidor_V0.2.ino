@@ -10,7 +10,7 @@ const char* password = STAPSK;
 
 // Create an instance of the server
 // specify the port to listen on as an argument
-WiFiServer server(82);
+WiFiServer server(80);
 
 void setup() {
   Serial.begin(115200);
@@ -30,10 +30,16 @@ void setup() {
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-
+  int servidor = 79;
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
+    delay(10000);
     Serial.print(F(".\n\t"));
+    WiFiServer server(servidor);
+    Serial.flush();
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, password);
+    Serial.println(servidor);    
+    servidor++;
   }
   Serial.println();
   Serial.println(F("WiFi connected"));
