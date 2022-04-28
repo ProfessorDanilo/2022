@@ -45,7 +45,7 @@ int receberNumeroBluetooth()
 
 
 
-
+/*
 //Ligar um led na porta x
 void ligarSaida(int x)
 {
@@ -84,7 +84,7 @@ int receberNumeroDoMonitor()
 }
 
 
-
+*/
 
 
 
