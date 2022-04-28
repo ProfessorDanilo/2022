@@ -18,7 +18,7 @@ int lerDigital(int x)
 }
 
 /*ler porta analógica*/
-int lerAnalógivca(int x)
+int lerAnalogica(int x)
 {
   return analogRead(x);
 }
