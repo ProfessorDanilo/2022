@@ -23,6 +23,12 @@ int lerAnalogica(int x)
   return analogRead(x);
 }
 
+/*pwm*/
+void pwm(int x, int y){
+    pinMode(x, OUTPUT);
+    analogWrite(x, y);
+}
+
 /*COMUNICAÇÃO SERIAL*/
 /*inicia comunicação serial*/
 int iniciaComunicacao()
@@ -40,11 +46,25 @@ int lerNumeroSerial()
 }
 
 
-/*espera por x segundos*/
+/*espera x (segundo, minuto, milissegundo, microssegundo)*/
 int esperaSegundos(float x)
 {
   delay(x*1000);
 }
+int esperaMinutos(float x)
+{
+  delay(x*1000/60);
+}
+int esperaMicroSegundos(float x)
+{
+  delayMicroseconds(x);
+}
+int esperaMiliSegundos(int x)
+{
+  delay(x);
+}
+
+
 
 /*mostrando no monitor pulando linha*/
 void imprimirPL(int x)
@@ -102,5 +122,9 @@ int aleatorioEntre(int min, int max)
 {
    return random(min, max);
 
+}
+int aleatorioSemente(int x)
+{
+    randomSeed(analogRead(x));
 }
 
