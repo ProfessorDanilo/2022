@@ -1,3 +1,6 @@
+//O CONTEÚDO ABAIXO FOI COPIADO DO CURSO COM O INTUITO DE SER USADO COMO RESUMO
+
+
 /*var tem um escopo global, então funciona em qualquer parte do código, o que pode gerar possíveis problemas em relação à lógica da aplicação.
 let e const têm escopo local, sendo assim, não podem ser acessadas em outros escopos, e const não pode ter seu valor alterado depois de definido.
 O JavaScript considera alguns valores como false durante comparações, como com null, undefined, 0, NaN e Strings vazias.
