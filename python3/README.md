@@ -22,4 +22,3 @@ Digite o número de arquivos no total (a serem juntados).
 
 Por fim, digite o nome do arquivo de saída.
 
-\[\vec v\]
