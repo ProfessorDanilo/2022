@@ -6,7 +6,7 @@ Este programa foi desenvolvido e testado no Windows. Ele pode funcionar em outro
 
 Criado por [Professor Danilo](http://professordanilo.com). 
 
-Acesse o [canal do professor no youtube](https://youtu.be/8nVkNs_A1qM) para acompanhar o desenvolvimento deste programa.
+Acesse o [canal do professor no YouTube](https://youtu.be/8nVkNs_A1qM) para acompanhar o desenvolvimento deste programa.
 
 ## Como usar este programa
 
@@ -21,3 +21,5 @@ Execute o programa informando o nome escolhido para os arquivos. No exemplo ante
 Digite o número de arquivos no total (a serem juntados).
 
 Por fim, digite o nome do arquivo de saída.
+
+\[\vec v\]
