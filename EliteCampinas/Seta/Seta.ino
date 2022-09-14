@@ -17,11 +17,14 @@ void setup() {
 void loop() {
   Serial.println(digitalRead(botaoEsquerdo));
   Serial.println(digitalRead(botaoDireito));
-  if (!digitalRead(botaoEsquerdo)) {
+  if (!digitalRead(botaoEsquerdo) && digitalRead(botaoDireito)) {
     seta = 1;
   }
-  if (!digitalRead(botaoDireito)) {
+  if (digitalRead(botaoEsquerdo) && !digitalRead(botaoDireito)) {
     seta = 2;
+  }
+  if (!digitalRead(botaoEsquerdo) && !digitalRead(botaoDireito)) {
+    seta = 3;
   }
   delay(300);
   if (seta == 1) {
@@ -33,5 +36,9 @@ void loop() {
     digitalWrite(LEDdireito, HIGH);
     delay(400);
     digitalWrite(LEDdireito, LOW);
+  }
+  if (seta == 3) {
+    digitalWrite(LEDdireito, LOW);
+    digitalWrite(LEDesquerdo, LOW);
   }
 }
