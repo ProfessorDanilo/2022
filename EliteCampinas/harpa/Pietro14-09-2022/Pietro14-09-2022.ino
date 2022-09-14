@@ -21,3 +21,7 @@ void loop() {
 
   delay(10);
 }
+/*sem comentários
+ * está no caminho certo.
+ * Qualquer coisa me chama durante a aula.
+ */
