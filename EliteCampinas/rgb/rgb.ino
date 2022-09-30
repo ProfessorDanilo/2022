@@ -1,3 +1,4 @@
+// Conecte o LED rgb no gnd e nas portas digitais 3, 5, 6 
 void setup(){
   pinMode(3, OUTPUT);
   pinMode(5, OUTPUT);
