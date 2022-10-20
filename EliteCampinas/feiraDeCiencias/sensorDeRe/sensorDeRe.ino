@@ -1,9 +1,9 @@
-int echo = 2, trigger = 3, buzer = 9, buildInPin = 13;
+int echo = 2, trigger = 3, buzzer = 9, buildInPin = 13;
 long tempo;
 void setup() {
   pinMode(echo, INPUT);
   pinMode(trigger, OUTPUT);
-  pinMode(buzer, OUTPUT);
+  pinMode(buzzer, OUTPUT);
   pinMode(buildInPin, OUTPUT);
   Serial.begin(9600);
 }
@@ -33,49 +33,49 @@ void loop() {
   Serial.println();
   if (tempo < 250) {
     digitalWrite(buildInPin, HIGH);
-    tone(buzer, 555);
+    tone(buzzer, 555);
   } else  if (tempo < 600) {
     digitalWrite(buildInPin, HIGH);
-    noTone(buzer);
-    tone(buzer, 555);
+    noTone(buzzer);
+    tone(buzzer, 555);
     delay(100);
     digitalWrite(buildInPin, LOW);
-    noTone(buzer);
+    noTone(buzzer);
     delay(50);
   } else  if (tempo < 900) {
     digitalWrite(buildInPin, HIGH);
-    noTone(buzer);
-    tone(buzer, 555);
+    noTone(buzzer);
+    tone(buzzer, 555);
     delay(200);
     digitalWrite(buildInPin, LOW);
-    noTone(buzer);
+    noTone(buzzer);
     delay(100);
   } else  if (tempo < 1200) {
     digitalWrite(buildInPin, HIGH);
-    noTone(buzer);
-    tone(buzer, 555);
+    noTone(buzzer);
+    tone(buzzer, 555);
     delay(300);
     digitalWrite(buildInPin, LOW);
-    noTone(buzer);
+    noTone(buzzer);
     delay(200);
   } else  if (tempo < 1700) {
     digitalWrite(buildInPin, HIGH);
-    noTone(buzer);
-    tone(buzer, 555);
+    noTone(buzzer);
+    tone(buzzer, 555);
     delay(400);
     digitalWrite(buildInPin, LOW);
-    noTone(buzer);
+    noTone(buzzer);
     delay(300);
   } else  if (tempo < 2000) {
     digitalWrite(buildInPin, HIGH);
-    noTone(buzer);
-    tone(buzer, 555);
+    noTone(buzzer);
+    tone(buzzer, 555);
     delay(500);
     digitalWrite(buildInPin, LOW);
-    noTone(buzer);
+    noTone(buzzer);
     delay(400);
   } else {
     digitalWrite(buildInPin, LOW);
-    noTone(buzer);
+    noTone(buzzer);
   }
 }
