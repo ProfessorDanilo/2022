@@ -1,4 +1,4 @@
-/*Crie uma matriz que apresenta todo o alfabeto e, utilizando o looping for,
+/*2. Crie uma matriz que apresenta todo o alfabeto e, utilizando o looping for,
 exibe na tela todo o alfabeto. Para isso, temos que salvar o alfabeto em uma
 "matriz" de caracteres e isso é feito com chaves { } e aspas simples ' ' como
 se segue:
