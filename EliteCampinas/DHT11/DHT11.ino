@@ -39,5 +39,5 @@ void loop()
     Serial.println(t);
     //Serial.println(" °C");
   }
-  delay(360000);
+  delay(3600);
 }
