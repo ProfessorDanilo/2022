@@ -1,3 +1,9 @@
+/*
+ * Este código foi retirado de
+ * https://blogmasterwalkershop.com.br/arduino/como-usar-com-arduino-sensor-de-umidade-e-temperatura-dht11
+ * e foi mantido de modo integral.
+ */
+
 #include "dht.h" //INCLUSÃO DE BIBLIOTECA
 
 const int pinoDHT11 = A2; //PINO ANALÓGICO UTILIZADO PELO DHT11
